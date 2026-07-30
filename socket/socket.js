@@ -5,7 +5,7 @@ let io;
 export const initSocket = (server) => {
   io = new Server(server, {
     cors: {
-      origin: "https://kuraz-website.vercel.app/",
+      origin: "https://kuraz-website.vercel.app",
       origin: "https://kuraz-backend-sin2.onrender.com",
       origin: "http://localhost:5173/",
       credentials: true,
