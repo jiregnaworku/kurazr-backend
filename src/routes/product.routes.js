@@ -1,11 +1,12 @@
 import express from "express";
 
 import {
+  createProduct,
   getProducts,
   getProduct,
-  createProduct,
   updateProduct,
   deleteProduct,
+  toggleLike,
 } from "../controllers/product.controller.js";
 
 import { protect } from "../middlewares/auth.middleware.js";
@@ -32,22 +33,18 @@ router.get("/:id", getProduct);
 router.post(
   "/",
   (req, res, next) => {
-    console.log("✅ Route reached");
     next();
   },
   protect,
   (req, res, next) => {
-    console.log("✅ Auth passed");
     next();
   },
   adminMiddleware,
   (req, res, next) => {
-    console.log("✅ Admin passed");
     next();
   },
   upload.array("images", 10),
   (req, res, next) => {
-    console.log("✅ Multer passed");
     next();
   },
   createProduct,
@@ -64,5 +61,7 @@ router.put(
 
 // Delete Product
 router.delete("/:id", protect, adminMiddleware, deleteProduct);
+
+router.patch("/:id/like", toggleLike);
 
 export default router;

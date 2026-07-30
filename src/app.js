@@ -9,6 +9,9 @@ import orderRoutes from "./routes/order.routes.js";
 import userRoutes from "./routes/userRoutes.js";
 import profileRoutes from "./routes/profile.Routes.js";
 import notificationRoutes from "./routes/notification.Routes.js";
+import messageRoutes from "./routes/message.Routes.js";
+import commentRoutes from "./routes/comment.routes.js";
+
 dotenv.config();
 
 const app = express();
@@ -23,6 +26,8 @@ app.use("/api/products", productRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/profile", profileRoutes);
 app.use("/api/notifications", notificationRoutes);
+app.use("/api/messages", messageRoutes);
+app.use("/api/comments", commentRoutes);
 app.use((err, req, res, next) => {
   console.error("GLOBAL ERROR:");
   console.error(err);

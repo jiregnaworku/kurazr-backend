@@ -170,3 +170,60 @@ export const deleteProduct = async (req, res) => {
     });
   }
 };
+// ===============================
+// Toggle Like / Unlike Product
+// Works for guests (visitorId) and logged-in users
+// One like per person
+// ===============================
+export const toggleLike = async (req, res) => {
+  try {
+    const { visitorId } = req.body;
+
+    if (!visitorId) {
+      return res.status(400).json({
+        success: false,
+        message: "visitorId is required",
+      });
+    }
+
+    const product = await Product.findById(req.params.id);
+
+    if (!product) {
+      return res.status(404).json({
+        success: false,
+        message: "Product not found",
+      });
+    }
+
+    // Make sure likedBy array exists (for old products)
+    if (!product.likedBy) {
+      product.likedBy = [];
+    }
+
+    const alreadyLiked = product.likedBy.includes(visitorId);
+
+    if (alreadyLiked) {
+      // Unlike
+      product.likedBy = product.likedBy.filter((id) => id !== visitorId);
+      product.likes = Math.max(product.likes - 1, 0);
+    } else {
+      // Like
+      product.likedBy.push(visitorId);
+      product.likes += 1;
+    }
+
+    await product.save();
+
+    res.status(200).json({
+      success: true,
+      likes: product.likes,
+      liked: !alreadyLiked, // true if now liked, false if unliked
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
+};

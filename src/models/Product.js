@@ -60,6 +60,21 @@ const productSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
+
+    // ==========================
+    // Likes
+    // ==========================
+    likes: {
+      type: Number,
+      default: 0,
+    },
+
+    // Stores visitorIds (and userIds) who already liked
+    likedBy: [
+      {
+        type: String,
+      },
+    ],
   },
   {
     timestamps: true,
