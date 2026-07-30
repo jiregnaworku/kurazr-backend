@@ -12,10 +12,10 @@ connectDB();
 const server = http.createServer(app);
 
 // Socket.IO
+// Socket.IO
 export const io = new Server(server, {
   cors: {
-    origin: "http://localhost:5173",
-    origin: "https://kuraz-website.vercel.app/", // React frontend
+    origin: ["https://kuraz-website.vercel.app", "http://localhost:5173"],
     methods: ["GET", "POST"],
     credentials: true,
   },
