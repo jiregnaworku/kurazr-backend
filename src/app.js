@@ -16,7 +16,13 @@ dotenv.config();
 
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: ["https://kuraz-website.vercel.app", "http://localhost:5173"],
+    credentials: true,
+  }),
+);
+
 app.use(express.json());
 app.use(cookieParser());
 
@@ -28,6 +34,7 @@ app.use("/api/profile", profileRoutes);
 app.use("/api/notifications", notificationRoutes);
 app.use("/api/messages", messageRoutes);
 app.use("/api/comments", commentRoutes);
+
 app.use((err, req, res, next) => {
   console.error("GLOBAL ERROR:");
   console.error(err);
