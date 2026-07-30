@@ -14,7 +14,8 @@ const server = http.createServer(app);
 // Socket.IO
 export const io = new Server(server, {
   cors: {
-    origin: "https://kuraz-website.vercel.app", // React frontend
+    origin: "http://localhost:5173",
+    origin: "https://kuraz-website.vercel.app/", // React frontend
     methods: ["GET", "POST"],
     credentials: true,
   },
