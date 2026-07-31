@@ -24,5 +24,6 @@ router.delete("/:id", protect, deleteNotification);
 
 // Admin
 router.post("/", protect, adminMiddleware, createNotification);
+router.put("/mark-all-read", protect, adminMiddleware, markAllAsRead);
 
 export default router;

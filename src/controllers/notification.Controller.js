@@ -54,7 +54,7 @@ export const markAsRead = async (req, res) => {
 // Mark all notifications as read
 export const markAllAsRead = async (req, res) => {
   try {
-    await Notification.updateMany(
+    const result = await Notification.updateMany(
       {
         user: req.user.id,
         isRead: false,
@@ -66,7 +66,8 @@ export const markAllAsRead = async (req, res) => {
 
     res.json({
       success: true,
-      message: "All notifications marked as read.",
+      message: `${result.modifiedCount} notifications marked as read.`,
+      modifiedCount: result.modifiedCount,
     });
   } catch (err) {
     res.status(500).json({
