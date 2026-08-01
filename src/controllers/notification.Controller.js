@@ -52,8 +52,21 @@ export const markAsRead = async (req, res) => {
 };
 
 // Mark all notifications as read
+// controllers/notificationController.js
+
+// Mark all notifications as read
 export const markAllAsRead = async (req, res) => {
   try {
+    // Log the user for debugging
+    console.log("User ID from token:", req.user?.id);
+
+    if (!req.user || !req.user.id) {
+      return res.status(401).json({
+        success: false,
+        message: "User not authenticated",
+      });
+    }
+
     const result = await Notification.updateMany(
       {
         user: req.user.id,
@@ -70,6 +83,7 @@ export const markAllAsRead = async (req, res) => {
       modifiedCount: result.modifiedCount,
     });
   } catch (err) {
+    console.error("Mark all as read error:", err);
     res.status(500).json({
       success: false,
       message: err.message,
